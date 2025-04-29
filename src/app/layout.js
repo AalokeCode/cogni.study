@@ -1,4 +1,5 @@
 import "./globals.css";
+import localFont from 'next/font/local'
 
 export const metadata = {
   title: "cogni.study - An AI-powered learning platform",
@@ -14,11 +15,13 @@ export const metadata = {
   },
 };
 
+const overusedGrotesk = localFont({ src: '/fonts/overused-grotesk.ttf', display: 'swap', variable: '--font-overusedGrotesk' });
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`bg-[#131313]`}
+        className={`bg-[#131313] ${overusedGrotesk.className}`}
       >
         {children}
       </body>
