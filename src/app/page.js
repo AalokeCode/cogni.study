@@ -1,17 +1,14 @@
-'use client';
-import Image from "next/image";
-import { ReactLenis, useLenis } from 'lenis/react'
+"use client";
 import Header from "@/components/sections/Home/header";
 import MainFeatureSection from "@/components/sections/Home/mainFeature";
 import Footer from "@/components/elements/footer";
 
 export default function Home() {
-  const lenis = useLenis(({ scroll }) => {})
   return (
-    <ReactLenis root>
-    <Header></Header>
-    <MainFeatureSection></MainFeatureSection>
-    <Footer></Footer>
-    </ReactLenis>
+    <>
+      <Header></Header>
+      <MainFeatureSection></MainFeatureSection>
+      <Footer></Footer>
+    </>
   );
 }
