@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+"use client";
+import { useState, useRef, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
@@ -8,6 +9,13 @@ import Link from "next/link";
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      window.location.href = "/app/dashboard";
+    }
+  }, []);
 
   const handleSignIn = async (e) => {
     e.preventDefault();

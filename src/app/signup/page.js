@@ -1,5 +1,6 @@
+"use client";
 import { useRef, useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
+import { Eye, EyeClosed, Check } from "lucide-react";
 import Image from "next/image";
 import Button from "@/components/elements/button";
 import toast, { Toaster } from "react-hot-toast";
@@ -104,13 +105,16 @@ export default function SignUp() {
             </div>
           </div>
           <div className="flex items-center gap-2 mb-3">
-            <input
-              type="checkbox"
-              name="terms"
-              checked
-              onChange={(e) => (e.target.checked = !e.target.checked)}
-              className="h-5 w-5 appearance-none rounded border-2 border-[#343434] bg-[#1E1E1E] checked:bg-white checked:before:content-['✓'] checked:before:text-black checked:before:text-sm checked:before:font-bold checked:before:flex checked:before:items-center checked:before:justify-center checked:before:h-full checked:before:w-full hover:border-[#4A4A4A] hover:bg-[#252525] checked:hover:bg-white focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[#131313] transition-all duration-200 ease-in-out cursor-pointer flex-shrink-0"
-            />
+            <label className="relative inline-block h-5 w-5">
+              <input
+                type="checkbox"
+                className="peer appearance-none h-full w-full rounded border-2 border-[#343434] checked:bg-white checked:hover:bg-white bg-[#1E1E1E] hover:border-[#4A4A4A] hover:bg-[#252525] focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[#131313] transition-all duration-200 ease-in-out cursor-pointer"
+              />
+              <Check
+                className="absolute inset-0 m-auto h-3.5 w-3.5 text-black opacity-0 peer-checked:opacity-100 pointer-events-none"
+                strokeWidth={3}
+              />
+            </label>
             <label className="text-sm">
               I agree to the{" "}
               <Link href="terms-of-service" className="underline">
