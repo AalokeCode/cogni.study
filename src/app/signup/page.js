@@ -108,6 +108,7 @@ export default function SignUp() {
             <label className="relative inline-block h-5 w-5">
               <input
                 type="checkbox"
+                name="terms"
                 className="peer appearance-none h-full w-full rounded border-2 border-[#343434] checked:bg-white checked:hover:bg-white bg-[#1E1E1E] hover:border-[#4A4A4A] hover:bg-[#252525] focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[#131313] transition-all duration-200 ease-in-out cursor-pointer"
               />
               <Check

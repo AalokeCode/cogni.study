@@ -13,7 +13,7 @@ export default function Chat() {
   useEffect(() => {
     if (id) {
       console.log(id);
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat/session/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/session/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setChat(data);
@@ -45,20 +45,31 @@ export default function Chat() {
                 clickHandler={async () => {
                   const loadingToast = toast.loading("Saving topiclist...");
                   try {
-                    await fetch(
-                      `${process.env.NEXT_PUBLIC_BACKEND_URL}/topiclist`,
+                    const response = await fetch(
+                      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/topiclist`,
                       {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
                         },
-                        body: content,
+                        body: JSON.stringify({
+                          userToken: localStorage.getItem("token"),
+                          topicData: content,
+                        }),
                       }
                     );
-                    toast.success("Topiclist saved successfully!", {
-                      id: loadingToast,
-                    });
+
+                    if (response.ok) {
+                      toast.success("Topiclist saved successfully!", {
+                        id: loadingToast,
+                      });
+                    } else {
+                      toast.error("Failed to save topiclist", {
+                        id: loadingToast,
+                      });
+                    }
                   } catch (error) {
+                    console.error("Save error:", error);
                     toast.error("Failed to save topiclist", {
                       id: loadingToast,
                     });
