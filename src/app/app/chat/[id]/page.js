@@ -120,26 +120,33 @@ export default function Chat() {
 
   if (!chat)
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-white text-lg">No chat found.</div>
+      <div className="flex items-center justify-center h-full px-2 sm:px-4">
+        <div className="text-white text-lg text-center">No chat found.</div>
       </div>
     );
 
   return (
     <div className="flex flex-col h-full bg-[#131313] text-white">
       <Toaster />
-      <div className="max-h-[70vh] overflow-y-auto bg-[#1A1A1A] p-5 rounded=t-2xl ">
+      <div
+        className="max-h-[70vh] overflow-y-auto bg-[#1A1A1A] p-5 rounded-t-2xl w-full
+        sm:max-w-4xl mx-auto
+        px-2 sm:px-5
+        "
+      >
         {chat.messages.map((message, index) => (
           <div
             key={index}
-            className={`flex w-4xl ${
+            className={`flex w-full ${
               message.role === "user" ? "justify-end" : "justify-start"
             }`}
           >
-            <div className={`mb-3`}>
-              <p>{message.role === "user" ? "You" : "CogniAI"}</p>
+            <div className={`mb-3 max-w-full sm:max-w-2xl md:max-w-3xl`}>
+              <p className="text-xs sm:text-sm mb-1 text-[#979797]">
+                {message.role === "user" ? "You" : "CogniAI"}
+              </p>
               <div
-                className={`leading-relaxed p-4 rounded-lg whitespace-pre-wrap ${
+                className={`leading-relaxed p-3 sm:p-4 rounded-lg whitespace-pre-wrap break-words ${
                   message.role === "user"
                     ? "bg-white text-[#131313] rounded-br-sm"
                     : "bg-[#1E1E1E] text-white border border-[#343434] rounded-bl-sm"
@@ -153,18 +160,19 @@ export default function Chat() {
           </div>
         ))}
       </div>
-      <div className="text-center flex justify-center items-center gap-2 w-full flex-col">
-        <div className="bg-[#1A1A1A] border-2 border-[#1A1A1A] w-5xl flex justify-between items-center rounded-b-full p-2 px-5 hover:border-[#3A3A3A] focus-within:border-white/40 transition-all duration-300">
+      <div className="text-center flex justify-center items-center gap-2 w-full flex-col px-2 sm:px-0">
+        <div className="bg-[#1A1A1A] border-2 border-[#1A1A1A] w-full sm:w-5xl flex flex-row justify-between items-center rounded-full p-2 px-3 sm:px-5 hover:border-[#3A3A3A] focus-within:border-white/40 transition-all duration-300">
           <input
             type="text"
             placeholder="Want some configuration? Chat with CogniAI"
-            className="flex-grow text-white placeholder:text-[#979797] focus:outline-0 py-3 px-8"
-          ></input>
-          <button className="bg-white text-[#131313] mr-5 flex items-center gap-3 px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-200 font-medium">
-            Send <SendHorizontal className="inline" />
+            className="flex-grow text-white placeholder:text-[#979797] focus:outline-0 py-2 px-3 sm:py-3 sm:px-8 bg-transparent rounded-full text-sm sm:text-base"
+          />
+          <button className="bg-white text-[#131313] mt-2 sm:mt-0 sm:mr-5 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-200 font-medium text-sm sm:text-base">
+            <span className="hidden sm:inline">Send</span>{" "}
+            <SendHorizontal className="inline" />
           </button>
         </div>
-        <p className="text-[#979797]">
+        <p className="text-[#979797] text-xs sm:text-sm text-center px-2">
           AI may make mistakes, For further information know our usage
           guidelines
         </p>

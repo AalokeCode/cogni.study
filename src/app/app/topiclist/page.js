@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Check, Calendar, BookOpen, Trash2 } from "lucide-react";
+import { Calendar, BookOpen, Trash2, Loader2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "@/components/elements/button";
 
@@ -149,6 +149,7 @@ export default function TopicLists() {
     return (
       <div className="flex flex-col w-full h-screen bg-[#131313] text-white">
         <div className="flex items-center justify-center h-full">
+          <Loader2 className="animate-spin h-10 w-10 text-white" />
           <div className="text-white text-lg">Loading your topic lists...</div>
         </div>
       </div>
@@ -175,11 +176,13 @@ export default function TopicLists() {
   return (
     <div className="flex flex-col w-full min-h-screen bg-[#131313] text-white">
       <Toaster />
-      <div className="p-10">
-        <div className="flex items-center justify-between mb-8">
+      <div className="px-4 py-6 sm:px-6 md:px-10 md:py-10">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-4xl font-bold mb-4">Your Topiclists</h1>
-            <p className="text-lg text-[#979797]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
+              Your Topiclists
+            </h1>
+            <p className="text-base sm:text-lg text-[#979797]">
               {topicLists.length === 0
                 ? "No topic lists yet. Create one by chatting with CogniAI!"
                 : `${topicLists.length} topic list${
@@ -192,6 +195,7 @@ export default function TopicLists() {
             textColor="[#131313]"
             isLink={true}
             url="/app/dashboard"
+            className="w-full sm:w-auto"
           >
             Create New List
           </Button>
@@ -200,9 +204,11 @@ export default function TopicLists() {
         {topicLists.length === 0 ? (
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
-              <BookOpen className="h-16 w-16 text-[#343434] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No Topic Lists Yet</h3>
-              <p className="text-[#979797] mb-6">
+              <BookOpen className="h-12 w-12 sm:h-16 sm:w-16 text-[#343434] mx-auto mb-4" />
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">
+                No Topic Lists Yet
+              </h3>
+              <p className="text-[#979797] mb-6 text-sm sm:text-base">
                 Start by creating your first topic list with CogniAI
               </p>
               <Button
@@ -210,13 +216,14 @@ export default function TopicLists() {
                 textColor="[#131313]"
                 isLink={true}
                 url="/app/chat"
+                className="w-full sm:w-auto"
               >
                 Get Started
               </Button>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {topicLists.map((topicList) => (
               <TopicListCard key={topicList.id} topicList={topicList} />
             ))}

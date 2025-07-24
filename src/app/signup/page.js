@@ -50,59 +50,67 @@ export default function SignUp() {
     }
   };
   return (
-    <div className="bg-[#131313] gap-20 flex text-white items-center justify-center h-screen">
+    <div className="bg-[#131313] flex flex-col md:flex-row gap-8 md:gap-20 text-white items-center justify-center min-h-screen px-4 py-8">
       <Toaster />
-      <div className="w-[480px] h-[520px]">
-        <Image
-          src="/images/sign-flow.png"
-          alt="login"
-          width={960}
-          height={1040}
-        />
+      <div className="w-full flex justify-center items-center mb-8 md:mb-0">
+        <div className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[480px] lg:h-[520px] flex items-center justify-center">
+          <Image
+            src="/images/sign-flow.png"
+            alt="login"
+            width={480}
+            height={520}
+            className="w-full h-full object-contain"
+            priority
+          />
+        </div>
       </div>
-      <div>
+      <div className="w-full max-w-md">
         <Image
           src="/logo/logo-white.svg"
           alt="logo"
-          width={240}
-          height={56}
-          className="logo mb-3"
+          width={180}
+          height={42}
+          className="logo mx-auto mb-3"
         />
-        <h1 className="text-6xl mb-2">Manage. Time. Excel</h1>
-        <p className="mb-5 text-neutral-400">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl mb-2 text-center">
+          Manage. Time. Excel
+        </h1>
+        <p className="mb-5 text-neutral-400 text-center text-base md:text-lg">
           Enhance your study experience with cogni
         </p>
         <form className="flex flex-col mb-5" ref={formRef}>
-          <label className="mb-1">What do we call you?</label>
+          <label className="mb-1 text-sm md:text-base">
+            What do we call you?
+          </label>
           <input
             type="text"
             name="displayName"
             placeholder="Eg. John Doe"
-            className="bg-[#1E1E1E] w-full p-3 py-3 border border-[#343434] rounded-lg mb-4  text-white placeholder-neutral-500  transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30"
-          ></input>
-          <label className="mb-1">Email</label>
+            className="bg-[#1E1E1E] w-full p-3 border border-[#343434] rounded-lg mb-4 text-white placeholder-neutral-500 transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 text-sm md:text-base"
+          />
+          <label className="mb-1 text-sm md:text-base">Email</label>
           <input
             type="email"
             name="email"
             placeholder="Enter your email address"
-            className="bg-[#1E1E1E] w-full p-3 py-3 border border-[#343434] rounded-lg mb-4  text-white placeholder-neutral-500  transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30"
-          ></input>
-          <label className="mb-1">Password</label>
-          <div className="relative">
+            className="bg-[#1E1E1E] w-full p-3 border border-[#343434] rounded-lg mb-4 text-white placeholder-neutral-500 transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 text-sm md:text-base"
+          />
+          <label className="mb-1 text-sm md:text-base">Password</label>
+          <div className="relative flex items-center mb-4">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="⋅⋅⋅⋅⋅⋅⋅"
               suggested="current-password"
-              className="bg-[#1E1E1E] w-full p-3 py-3 border border-[#343434] rounded-lg mb-4  text-white placeholder-neutral-500  transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30"
-            ></input>
-            <div className="absolute right-3 top-[20%] transform cursor-pointer">
+              className="bg-[#1E1E1E] w-full p-3 pr-10 border border-[#343434] rounded-lg text-white placeholder-neutral-500 transition-all duration-200 ease-in-out hover:border-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 text-sm md:text-base"
+            />
+            <span className="absolute right-3 cursor-pointer flex items-center h-full top-0">
               {showPassword ? (
                 <EyeClosed onClick={() => setShowPassword(false)} />
               ) : (
                 <Eye onClick={() => setShowPassword(true)} />
               )}
-            </div>
+            </span>
           </div>
           <div className="flex items-center gap-2 mb-3">
             <label className="relative inline-block h-5 w-5">
@@ -116,7 +124,7 @@ export default function SignUp() {
                 strokeWidth={3}
               />
             </label>
-            <label className="text-sm">
+            <label className="text-xs sm:text-sm">
               I agree to the{" "}
               <Link href="terms-of-service" className="underline">
                 Terms of Service
@@ -138,7 +146,7 @@ export default function SignUp() {
             </Button>
           </div>
         </form>
-        <p className="text-center">
+        <p className="text-center text-sm md:text-base">
           Already a User?{" "}
           <Link className="underline" href="signin">
             Sign In

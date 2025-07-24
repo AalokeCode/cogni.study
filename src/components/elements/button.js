@@ -13,7 +13,7 @@ export default function Button({
   return isLink ? (
     <Link
       href={url}
-      className={`${background} text-${textColor} px-5 py-2.5 rounded-full cursor-pointer hover:scale-105 transition duration-300 flex items-center gap-3 ${
+      className={`${background} text-${textColor} px-5 py-2.5 rounded-full cursor-pointer hover:scale-105 transition duration-300 flex items-center justify-center gap-3 ${
         isFullWidth ? "w-full" : ""
       }`}
     >
@@ -22,7 +22,7 @@ export default function Button({
   ) : (
     <button
       onClick={clickHandler}
-      className={`${background} text-${textColor} px-5 py-2.5 rounded-full cursor-pointer hover:scale-105 transition duration-300 flex items-center gap-3 ${
+      className={`${background} text-${textColor} px-5 py-2.5 rounded-full cursor-pointer hover:scale-105 transition duration-300 flex items-center justify-center gap-3 ${
         isFullWidth ? "w-full" : ""
       }`}
     >

@@ -92,15 +92,15 @@ export default function Header() {
   }, []);
   return (
     <div className="flex items-center justify-center">
-      <div className="w-11/12 bg-gradient-to-t from-[#201F1F] to-[#131313] rounded-b-4xl pb-5 header">
+      <div className="md:w-11/12 bg-gradient-to-t from-[#201F1F] to-[#131313] rounded-b-4xl pb-5 header">
         <Navbar ref={navbarRef} isLoggedIn={false}></Navbar>
         <div className="block overflow-hidden pb-2">
-          <h1 className="text-center text-6xl text-white mt-5 top-header-text">
+          <h1 className="text-center text-4xl md:text-6xl text-white mt-5 top-header-text">
             An AI Learning Companion
           </h1>
         </div>
         <div className="block overflow-hidden">
-          <h1 className="text-center text-6xl text-white mb-3 bottom-header-text">
+          <h1 className="text-center text-4xl md:text-6xl text-white mb-3 bottom-header-text">
             That helps you{" "}
             <span className="font-bold">
               <span>focus</span>
@@ -111,16 +111,13 @@ export default function Header() {
           Enhance your learning with cogni-curated features, AI integrations and
           many more.
         </p>
-        {
-          // TODO: to implement the auto-scroll to the features section.
-        }
         <div className="flex items-center justify-center">
           <Image
             alt="header-image"
             src="/images/main-header.png"
             width="800"
             height="800"
-            className="w-[400px] h-[400px] header-image"
+            className="w-[200px] h-[200px] md:w-[400px] md:h-[400px] header-image"
           ></Image>
         </div>
       </div>
