@@ -9,6 +9,8 @@ export default function Chat() {
   const { id } = useParams();
   const [chat, setChat] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -32,7 +34,7 @@ export default function Chat() {
       return (
         <div>
           <div className="sticky top-0 pb-3 bg-neutral-800 px-5 py-3 rounded-2xl mb-4 z-10 shadow">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="font-bold text-lg">{data.title}</h2>
                 <p className="text-sm text-[#979797]">
@@ -42,6 +44,7 @@ export default function Chat() {
               <Button
                 backgroundColor="white"
                 textColor="[#131313]"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl text-sm font-semibold shadow-md"
                 clickHandler={async () => {
                   const loadingToast = toast.loading("Saving topiclist...");
                   try {
@@ -125,6 +128,51 @@ export default function Chat() {
       </div>
     );
 
+  const handleSend = async () => {
+    if (!input.trim() || sending) return;
+    setSending(true);
+    const userMessage = {
+      role: "user",
+      content: input,
+    };
+
+    setChat((prev) => ({
+      ...prev,
+      messages: [...(prev?.messages || []), userMessage],
+    }));
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sessionId: id,
+            message: input,
+          }),
+        }
+      );
+      if (response.ok) {
+        // Refetch chat session to get latest messages (including AI response)
+        const chatResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/chat/session/${id}`
+        );
+        if (chatResponse.ok) {
+          const chatData = await chatResponse.json();
+          setChat(chatData);
+        }
+        setInput("");
+      } else {
+        toast.error("Failed to send message");
+      }
+    } catch (error) {
+      toast.error("Error sending message");
+    }
+    setSending(false);
+  };
+
   return (
     <div className="flex flex-col h-full bg-[#131313] text-white">
       <Toaster />
@@ -134,31 +182,33 @@ export default function Chat() {
         px-2 sm:px-5
         "
       >
-        {chat.messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex w-full ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div className={`mb-3 max-w-full sm:max-w-2xl md:max-w-3xl`}>
-              <p className="text-xs sm:text-sm mb-1 text-[#979797]">
-                {message.role === "user" ? "You" : "CogniAI"}
-              </p>
+        {Array.isArray(chat?.messages)
+          ? chat.messages.map((message, index) => (
               <div
-                className={`leading-relaxed p-3 sm:p-4 rounded-lg whitespace-pre-wrap break-words ${
-                  message.role === "user"
-                    ? "bg-white text-[#131313] rounded-br-sm"
-                    : "bg-[#1E1E1E] text-white border border-[#343434] rounded-bl-sm"
+                key={index}
+                className={`flex w-full ${
+                  message.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                {message.role === "user"
-                  ? message.content
-                  : renderAIContent(message.content)}
+                <div className={`mb-3 max-w-full sm:max-w-2xl md:max-w-3xl`}>
+                  <p className="text-xs sm:text-sm mb-1 text-[#979797]">
+                    {message.role === "user" ? "You" : "CogniAI"}
+                  </p>
+                  <div
+                    className={`leading-relaxed p-3 sm:p-4 rounded-lg whitespace-pre-wrap break-words ${
+                      message.role === "user"
+                        ? "bg-white text-[#131313] rounded-br-sm"
+                        : "bg-[#1E1E1E] text-white border border-[#343434] rounded-bl-sm"
+                    }`}
+                  >
+                    {message.role === "user"
+                      ? message.content
+                      : renderAIContent(message.content)}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))
+          : null}
       </div>
       <div className="text-center flex justify-center items-center gap-2 w-full flex-col px-2 sm:px-0">
         <div className="bg-[#1A1A1A] border-2 border-[#1A1A1A] w-full sm:w-5xl flex flex-row justify-between items-center rounded-full p-2 px-3 sm:px-5 hover:border-[#3A3A3A] focus-within:border-white/40 transition-all duration-300">
@@ -166,9 +216,21 @@ export default function Chat() {
             type="text"
             placeholder="Want some configuration? Chat with CogniAI"
             className="flex-grow text-white placeholder:text-[#979797] focus:outline-0 py-2 px-3 sm:py-3 sm:px-8 bg-transparent rounded-full text-sm sm:text-base"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSend();
+            }}
+            disabled={sending}
           />
-          <button className="bg-white text-[#131313] mt-2 sm:mt-0 sm:mr-5 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-200 font-medium text-sm sm:text-base">
-            <span className="hidden sm:inline">Send</span>{" "}
+          <button
+            className="bg-white text-[#131313] mt-2 sm:mt-0 sm:mr-5 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-full hover:bg-gray-200 transition-colors duration-200 font-medium text-sm sm:text-base"
+            onClick={handleSend}
+            disabled={sending}
+          >
+            <span className="hidden sm:inline">
+              {sending ? "Sending..." : "Send"}
+            </span>{" "}
             <SendHorizontal className="inline" />
           </button>
         </div>

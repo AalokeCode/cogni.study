@@ -222,10 +222,10 @@ export default function StudyPage() {
   }
 
   return (
-    <div className="h-[80vh] w-full bg-[#131313] text-white flex">
+    <div className="h-[80vh] w-full bg-[#131313] text-white flex md:flex-row flex-col">
       <Toaster />
 
-      <div className="w-1/2 flex flex-col items-center justify-center p-8">
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8">
         <div className="relative w-80 h-80 mb-8">
           <svg
             className="w-full h-full transform -rotate-90"
@@ -366,7 +366,7 @@ export default function StudyPage() {
         )}
       </div>
 
-      <div className="w-1/2 bg-[#1A1A1A] p-8 h-[80vh]">
+      <div className="w-full md:w-1/2 bg-[#1A1A1A] p-8 h-[80vh]">
         <div className="h-full flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">{topicList.title}</h2>

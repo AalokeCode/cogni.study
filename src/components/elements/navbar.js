@@ -149,7 +149,7 @@ export default function Navbar({ isLoggedIn }) {
             backgroundColor="white"
             textColor="[#131313]"
             isLink="true"
-            url="/logout"
+            url="/signout"
           >
             <span className="hidden sm:inline">Sign Out</span>
             <LogOut className="h-4 w-4" />
